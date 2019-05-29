@@ -1,0 +1,4 @@
+.enhanced collapsible-toggle[collapsed] .collapsible-content,
+.collapsible-enhanced[collapsed] .collapsible-content {
+	display: none;
+}
