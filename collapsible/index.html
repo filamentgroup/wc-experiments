@@ -13,29 +13,30 @@
 
   <style>
     /* some simple demo styles for all collapsibles on this page */
-    .collapsible-header,
-    .collapsible-content {
+    collapsible-toggle,
+    collapsible-toggle + * {
         border: 1px solid #ccc;
         padding: .7em 35px;
         font-size: 1em;
         margin-top: 0;
         background-color: #fff;
+        display: block;
     }
-    .collapsible-content {
+    collapsible-toggle + * {
         margin-top: 0;
         border-top-width: 0;
         padding-top: 1.5em;
         padding-bottom: 1.5em;
     }
-    .collapsible-header {
+    collapsible-toggle {
         margin-bottom: 0;
         cursor: pointer;
         background: url(tri-down.png) 10px 50% no-repeat;
     }
-    [collapsed] > .collapsible-header {
+    collapsible-toggle[collapsed] {
         background-image: url(tri-right.png);
     }
-    .collapsible-header:focus {
+    collapsible-toggle:focus {
         background-color: #eee;
     }
     </style>
@@ -43,9 +44,8 @@
 <body>
   <h1>Test Collapsible Web Component</h1>
   
-  <collapsible-toggle collapsed>
-    <h4>Show/Hide Content</h4>
-	<p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
-  </collapsible-toggle>
+    <collapsible-toggle collapsed>Show/Hide Content</collapsible-toggle>
+	  <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+  
 </body>
 </html>

@@ -1,4 +1,3 @@
-.enhanced collapsible-toggle[collapsed] .collapsible-content,
-.collapsible-enhanced[collapsed] .collapsible-content {
+collapsible-toggle[aria-expanded=false] + * {
 	display: none;
 }
