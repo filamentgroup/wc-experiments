@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test Collapsible Web Component</title>
-  <link rel="stylesheet" href="collapsible.css" />
   <script type="module">
     document.documentElement.classList.add( "enhanced" );
     import './wc-collapsible.js';
@@ -13,8 +12,8 @@
 
   <style>
     /* some simple demo styles for all collapsibles on this page */
-    collapsible-toggle,
-    collapsible-toggle + * {
+    collapsible-toggle > button,
+    collapsible-toggle > button + * {
         border: 1px solid #ccc;
         padding: .7em 35px;
         font-size: 1em;
@@ -22,21 +21,21 @@
         background-color: #fff;
         display: block;
     }
-    collapsible-toggle + * {
+    collapsible-toggle > button + * {
         margin-top: 0;
         border-top-width: 0;
         padding-top: 1.5em;
         padding-bottom: 1.5em;
     }
-    collapsible-toggle {
+    collapsible-toggle > button {
         margin-bottom: 0;
         cursor: pointer;
         background: url(tri-down.png) 10px 50% no-repeat;
     }
-    collapsible-toggle[collapsed] {
+    collapsible-toggle > button[aria-expanded=false] {
         background-image: url(tri-right.png);
     }
-    collapsible-toggle:focus {
+    collapsible-toggle > button:focus {
         background-color: #eee;
     }
     </style>
@@ -44,8 +43,9 @@
 <body>
   <h1>Test Collapsible Web Component</h1>
   
-    <collapsible-toggle collapsed>Show/Hide Content</collapsible-toggle>
-	  <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
-  
+    <collapsible-toggle collapsed>
+      <button>Show/Hide Content</button>
+	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+    </collapsible-toggle>
 </body>
 </html>

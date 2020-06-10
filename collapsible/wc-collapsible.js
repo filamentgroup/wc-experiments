@@ -2,19 +2,27 @@ class Collapsible extends HTMLElement {
 
 	constructor(){
 		super();
-		this.headerBtn = this;
+		this.headerBtn = this.firstElementChild;
 		this.content = this.headerBtn.nextElementSibling;
 		this.contentId = this.content.id || "collapsible_" + new Date().getTime();
-		this.collapsed = false;
+		this.collapsed = !!this.getAttribute("collapsed");
+		this.removeAttribute("collapsed");
 		this.addA11yAttrs();
 		this.bindEvents();
-		this.collapse();
+		this.collapsed && this.collapse();
+		this.addStyle();
         this.checkInteractivity();
 	}
 
 	addA11yAttrs(){
 		this.headerBtn.setAttribute( "aria-controls", this.contentId );
 		this.content.id = this.contentId;
+	}
+
+	addStyle(){
+		var style = document.createElement("style");
+		style.innerText = 'button[aria-expanded=false] + * { display: none; }';
+		this.append(style);
 	}
 
 	removeA11yAttrs(){
