@@ -12,20 +12,27 @@
 
   <style>
     /* some simple demo styles for all collapsibles on this page */
+    collapsible-toggle > button {
+      display: none;
+    }
+    collapsible-toggle:defined > button {
+      display: block;
+      padding-left: 35px;
+    }
     collapsible-toggle > button,
     collapsible-toggle > button + * {
-        border: 1px solid #ccc;
-        padding: .7em 35px;
+        padding: .7em 0;
+        border: 0;
         font-size: 1em;
         margin-top: 0;
         background-color: #fff;
-        display: block;
     }
     collapsible-toggle > button + * {
         margin-top: 0;
         border-top-width: 0;
         padding-top: 1.5em;
         padding-bottom: 1.5em;
+        padding-left: 10px;
     }
     collapsible-toggle > button {
         margin-bottom: 0;
@@ -42,9 +49,29 @@
 </head>
 <body>
   <h1>Test Collapsible Web Component</h1>
-  
+    <p>Starting with a hidden button:</p>
     <collapsible-toggle collapsed>
       <button>Show/Hide Content</button>
+	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+    </collapsible-toggle>
+
+    <p>Starting with a hidden button, expanded:</p>
+    <collapsible-toggle>
+      <button>Show/Hide Content</button>
+	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+    </collapsible-toggle>
+
+    <p>Starting with a heading, no button:</p>
+
+    <collapsible-toggle collapsed>
+      <h2>This is a heading</h2>
+	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+    </collapsible-toggle>
+
+    <p>Same, with toggle text customized:</p>
+
+    <collapsible-toggle toggletext="Toggle content">
+      <h2>This is a heading</h2>
 	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
     </collapsible-toggle>
 </body>

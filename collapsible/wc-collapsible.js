@@ -2,60 +2,69 @@ class Collapsible extends HTMLElement {
 
 	constructor(){
 		super();
-		this.headerBtn = this.firstElementChild;
-		this.content = this.headerBtn.nextElementSibling;
-		this.contentId = this.content.id || "collapsible_" + new Date().getTime();
-		this.collapsed = !!this.getAttribute("collapsed");
-		this.removeAttribute("collapsed");
-		this.addA11yAttrs();
-		this.bindEvents();
-		this.collapsed && this.collapse();
-		this.addStyle();
-        this.checkInteractivity();
+		this.toggletext = "Toggle";
+		var toggleAttr = this.getAttribute("toggletext");
+		this.toggletext = toggleAttr !== null ? toggleAttr : this.toggletext;
+		this.collapsed = this.getAttribute("collapsed") !== false;
+
+		this.initEvent = new CustomEvent("init", {
+			bubbles: true,
+			cancelable: false
+		});
+		this.expandEvent = new CustomEvent("expand", {
+			bubbles: true,
+			cancelable: false
+		});
+		this.collapseEvent = new CustomEvent("collapse", {
+			bubbles: true,
+			cancelable: false
+		});
 	}
 
-	addA11yAttrs(){
-		this.headerBtn.setAttribute( "aria-controls", this.contentId );
+	connectedCallback(){
+		this.headerBtn = this.firstElementChild;
+		this.content = this.headerBtn.nextElementSibling;
+		this.appendBtn();
+		this.setRelationship();
+		this.bindEvents();
+		this.setState();
+		this.addStyle();
+		this.dispatchEvent( this.initEvent );
+	}
+
+	appendBtn(){
+		if( !this.headerBtn.matches( "button" ) ){
+			var btn = document.createElement( "button" );
+			btn.innerHTML = this.toggletext;
+			this.headerBtn.append( btn );
+			this.headerBtn = btn;
+		}
+	}
+
+	setRelationship(){
+		this.contentId = this.content.id || "collapsible_" + new Date().getTime();
 		this.content.id = this.contentId;
+		this.headerBtn.setAttribute( "aria-controls", this.content.id );
 	}
 
 	addStyle(){
 		var style = document.createElement("style");
-		style.innerText = 'button[aria-expanded=false] + * { display: none; }';
+		style.innerText = 'collapsible-toggle:defined[collapsed] > *:nth-child(2) { display: none; }';
 		this.append(style);
-	}
-
-	removeA11yAttrs(){
-		this.content.removeAttribute( "data-hidden" );
-	}
-
-
-	isNonInteractive(){
-		var computedContent = window.getComputedStyle( this.content, null );
-		var computedHeader = window.getComputedStyle( this.headerBtn, null );
-		return computedContent.getPropertyValue( "display" ) !== "none" && computedContent.getPropertyValue( "visibility" ) !== "hidden" && ( computedHeader.getPropertyValue( "cursor" ) === "default" || computedHeader.getPropertyValue( "display" ) === "none" );
-	}
-
-	checkInteractivity(){
-		if( this.isNonInteractive() ){
-			this.removeA11yAttrs();
-		}
-		else{
-			this.setState();
-			this.addA11yAttrs();
-		}
 	}
 
 	expand(){
 		this.headerBtn.setAttribute( "aria-expanded", "true" );
-		this.content.setAttribute( "data-hidden", "false" );
+		this.removeAttribute( "collapsed" );
 		this.collapsed = false;
+		this.dispatchEvent( this.expandEvent );
 	}
 
 	collapse(){
 		this.headerBtn.setAttribute( "aria-expanded", "false" );
-		this.content.setAttribute( "data-hidden", "true" );
+		this.setAttribute( "collapsed", "" );
 		this.collapsed = true;
+		this.dispatchEvent( this.collapseEvent );
 	}
 
 	setState(){
@@ -78,21 +87,7 @@ class Collapsible extends HTMLElement {
 
 	bindEvents(){
 		var self = this;
-
-		this.headerBtn.addEventListener( "click", function( e ){
-			e.preventDefault();
-			self.toggle();
-        });
-    
-		var resizepoll;
-		window.addEventListener( "resize", function(){
-			if( resizepoll ){
-				window.clearTimeout( resizepoll );
-			}
-			resizepoll = window.setTimeout( function(){
-				self.checkInteractivity.call( self );
-			}, 150 );
-		} );
+		this.headerBtn.addEventListener('click', event => self.toggle());
 	}
 }
   
