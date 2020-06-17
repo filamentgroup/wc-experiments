@@ -1,7 +1,6 @@
 class Collapsible extends HTMLElement {
 
-	constructor(){
-		super();
+	connectedCallback(){
 		this.toggletext = "Toggle";
 		var toggleAttr = this.getAttribute("toggletext");
 		this.toggletext = toggleAttr !== null ? toggleAttr : this.toggletext;
@@ -21,9 +20,6 @@ class Collapsible extends HTMLElement {
 			bubbles: true,
 			cancelable: false
 		});
-	}
-
-	connectedCallback(){
 		this.headerBtn = this.firstElementChild;
 		this.content = this.headerBtn.nextElementSibling;
 		this.appendBtn();
