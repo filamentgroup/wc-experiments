@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test Text Expand Web Component</title>
+  <script>this.customElements||document.write('<script src="//unpkg.com/document-register-element"><\x2fscript>');</script>
+  <script src="//unpkg.com/@ungap/custom-elements-builtin"></script>
+  <script type="module">
+    import './wc-textexpand.js';
+  </script>
+
+</head>
+<body>
+  <h1>Test Text Expand Web Component</h1>
+    <textarea is="text-expand" cols="30" rows="10"></textarea>
+</body>
+</html>

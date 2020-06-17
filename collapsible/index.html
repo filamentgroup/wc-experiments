@@ -5,44 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test Collapsible Web Component</title>
+  <script>this.customElements||document.write('<script src="//unpkg.com/document-register-element"><\x2fscript>');</script>
+  <script src="//unpkg.com/@ungap/custom-elements-builtin"></script>
   <script type="module">
-    document.documentElement.classList.add( "enhanced" );
     import './wc-collapsible.js';
   </script>
 
   <style>
     /* some simple demo styles for all collapsibles on this page */
-    collapsible-toggle > button {
+    collapsible-toggle > button,
+    *[is="collapsible-toggle"] > button {
       display: none;
     }
-    collapsible-toggle:defined > button {
+    collapsible-toggle:defined > button,
+    *[is="collapsible-toggle"]:defined > button  {
       display: block;
       padding-left: 35px;
+      margin-bottom: 0;
+      cursor: pointer;
+      background: url(tri-down.png) 10px 50% no-repeat;
     }
     collapsible-toggle > button,
-    collapsible-toggle > button + * {
-        padding: .7em 0;
+    collapsible-toggle > button + *,
+    *[is="collapsible-toggle"] > button,
+    *[is="collapsible-toggle"] > button + * {
+        padding: .5em 0;
         border: 0;
         font-size: 1em;
         margin-top: 0;
         background-color: #fff;
     }
-    collapsible-toggle > button + * {
+    collapsible-toggle > *:nth-child(2),
+    *[is="collapsible-toggle"] > *:nth-child(2) {
         margin-top: 0;
         border-top-width: 0;
         padding-top: 1.5em;
         padding-bottom: 1.5em;
         padding-left: 10px;
     }
-    collapsible-toggle > button {
-        margin-bottom: 0;
-        cursor: pointer;
-        background: url(tri-down.png) 10px 50% no-repeat;
-    }
-    collapsible-toggle > button[aria-expanded=false] {
+   
+    collapsible-toggle > button[aria-expanded=false],
+    *[is="collapsible-toggle"] > button[aria-expanded=false] {
         background-image: url(tri-right.png);
     }
-    collapsible-toggle > button:focus {
+    collapsible-toggle > button:focus,
+    *[is="collapsible-toggle"] > button:focus {
         background-color: #eee;
     }
     </style>
@@ -71,6 +78,14 @@
     <p>Same, with toggle text customized:</p>
 
     <collapsible-toggle toggletext="Toggle content">
+      <h2>This is a heading</h2>
+	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+    </collapsible-toggle>
+
+
+    <p>Is alternative:</p>
+
+    <div is="collapsible-toggle">
       <h2>This is a heading</h2>
 	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
     </collapsible-toggle>

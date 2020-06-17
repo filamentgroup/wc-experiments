@@ -11,10 +11,12 @@ class Collapsible extends HTMLElement {
 			bubbles: true,
 			cancelable: false
 		});
+
 		this.expandEvent = new CustomEvent("expand", {
 			bubbles: true,
 			cancelable: false
 		});
+	
 		this.collapseEvent = new CustomEvent("collapse", {
 			bubbles: true,
 			cancelable: false
@@ -49,7 +51,10 @@ class Collapsible extends HTMLElement {
 
 	addStyle(){
 		var style = document.createElement("style");
-		style.innerText = 'collapsible-toggle:defined[collapsed] > *:nth-child(2) { display: none; }';
+		style.innerText = `
+			collapsible-toggle[collapsed] > *:nth-child(2),
+			*[is="collapsible-toggle"][collapsed] > *:nth-child(2) { display: none; }
+		`;
 		this.append(style);
 	}
 
@@ -93,6 +98,7 @@ class Collapsible extends HTMLElement {
   
 if ('customElements' in window) {
 	customElements.define('collapsible-toggle', Collapsible);
+
 }
 
 export default Collapsible;
