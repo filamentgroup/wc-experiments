@@ -1,7 +1,3 @@
-import {one} from './one.js';
-window.one = one;
-import {two} from './two.js';
-window.two = two;
 
 // a-component behavior factory
 // make an a-component and give it a does= attribute with space separated classes to run

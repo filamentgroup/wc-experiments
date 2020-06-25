@@ -7,6 +7,12 @@
   <title>Test Factory Web Component</title>
   <script>this.customElements||document.write('<script src="//unpkg.com/document-register-element"><\x2fscript>');</script>
   <script type="module">
+    import {one} from './one.js';
+    window.one = one;
+    import {two} from './two.js';
+    window.two = two;
+  </script>
+  <script type="module">
     import './component.js';
   </script>
   <style>
