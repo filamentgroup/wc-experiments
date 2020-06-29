@@ -1,10 +1,11 @@
-class Collapsible extends HTMLElement {
+export class Collapsible {
 
-	connectedCallback(){
+	constructor( elem ){
+		this.elem = elem;
 		this.toggletext = "Toggle";
-		var toggleAttr = this.getAttribute("toggletext");
+		var toggleAttr = this.elem.getAttribute("toggletext");
 		this.toggletext = toggleAttr !== null ? toggleAttr : this.toggletext;
-		this.collapsed = this.getAttribute("collapsed") !== false;
+		this.collapsed = this.elem.getAttribute("collapsed") !== false;
 
 		this.initEvent = new CustomEvent("init", {
 			bubbles: true,
@@ -20,14 +21,14 @@ class Collapsible extends HTMLElement {
 			bubbles: true,
 			cancelable: false
 		});
-		this.headerBtn = this.firstElementChild;
+		this.headerBtn = this.elem.firstElementChild;
 		this.content = this.headerBtn.nextElementSibling;
 		this.appendBtn();
 		this.setRelationship();
 		this.bindEvents();
 		this.setState();
 		this.addStyle();
-		this.dispatchEvent( this.initEvent );
+		this.elem.dispatchEvent( this.initEvent );
 	}
 
 	appendBtn(){
@@ -48,24 +49,23 @@ class Collapsible extends HTMLElement {
 	addStyle(){
 		var style = document.createElement("style");
 		style.innerText = `
-			collapsible-toggle[collapsed] > *:nth-child(2),
-			*[is="collapsible-toggle"][collapsed] > *:nth-child(2) { display: none; }
+			*[does=collapsible][collapsed] > *:nth-child(2) { display: none; }
 		`;
-		this.append(style);
+		this.elem.append(style);
 	}
 
 	expand(){
 		this.headerBtn.setAttribute( "aria-expanded", "true" );
-		this.removeAttribute( "collapsed" );
+		this.elem.removeAttribute( "collapsed" );
 		this.collapsed = false;
-		this.dispatchEvent( this.expandEvent );
+		this.elem.dispatchEvent( this.expandEvent );
 	}
 
 	collapse(){
 		this.headerBtn.setAttribute( "aria-expanded", "false" );
-		this.setAttribute( "collapsed", "" );
+		this.elem.setAttribute( "collapsed", "" );
 		this.collapsed = true;
-		this.dispatchEvent( this.collapseEvent );
+		this.elem.dispatchEvent( this.collapseEvent );
 	}
 
 	setState(){
@@ -91,10 +91,3 @@ class Collapsible extends HTMLElement {
 		this.headerBtn.addEventListener('click', event => self.toggle());
 	}
 }
-  
-if ('customElements' in window) {
-	customElements.define('collapsible-toggle', Collapsible);
-
-}
-
-export default Collapsible;

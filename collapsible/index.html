@@ -8,35 +8,33 @@
   <script>this.customElements||document.write('<script src="//unpkg.com/document-register-element"><\x2fscript>');</script>
   <script src="//unpkg.com/@ungap/custom-elements-builtin"></script>
   <script type="module">
-    import './wc-collapsible.js';
+    import {Collapsible} from './wc-collapsible.js';
+    window.collapsible = Collapsible;
+  </script>
+  <script type="module">
+    import '../factory/component.js';
   </script>
 
   <style>
     /* some simple demo styles for all collapsibles on this page */
-    collapsible-toggle > button,
-    *[is="collapsible-toggle"] > button {
+    a-component[does="collapsible"] > button {
       display: none;
     }
-    collapsible-toggle:defined > button,
-    *[is="collapsible-toggle"]:defined > button  {
+    a-component[does="collapsible"].defined > button  {
       display: block;
       padding-left: 35px;
       margin-bottom: 0;
       cursor: pointer;
       background: url(tri-down.png) 10px 50% no-repeat;
     }
-    collapsible-toggle > button,
-    collapsible-toggle > button + *,
-    *[is="collapsible-toggle"] > button,
-    *[is="collapsible-toggle"] > button + * {
+    a-component[does="collapsible"] > button {
         padding: .5em 0;
         border: 0;
         font-size: 1em;
         margin-top: 0;
         background-color: #fff;
     }
-    collapsible-toggle > *:nth-child(2),
-    *[is="collapsible-toggle"] > *:nth-child(2) {
+    a-component[does="collapsible"] > *:nth-child(2) {
         margin-top: 0;
         border-top-width: 0;
         padding-top: 1.5em;
@@ -44,12 +42,10 @@
         padding-left: 10px;
     }
    
-    collapsible-toggle > button[aria-expanded=false],
-    *[is="collapsible-toggle"] > button[aria-expanded=false] {
+    a-component[does="collapsible"] > button[aria-expanded=false] {
         background-image: url(tri-right.png);
     }
-    collapsible-toggle > button:focus,
-    *[is="collapsible-toggle"] > button:focus {
+    a-component[does="collapsible"] > button:focus {
         background-color: #eee;
     }
     </style>
@@ -57,37 +53,31 @@
 <body>
   <h1>Test Collapsible Web Component</h1>
     <p>Starting with a hidden button:</p>
-    <collapsible-toggle collapsed>
+    <a-component does="collapsible" collapsed>
       <button>Show/Hide Content</button>
 	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
-    </collapsible-toggle>
+    </a-component>
 
     <p>Starting with a hidden button, expanded:</p>
-    <collapsible-toggle>
+    <a-component does="collapsible">
       <button>Show/Hide Content</button>
 	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
-    </collapsible-toggle>
+    </a-component>
 
     <p>Starting with a heading, no button:</p>
 
-    <collapsible-toggle collapsed>
+    <a-component does="collapsible" collapsed>
       <h2>This is a heading</h2>
 	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
-    </collapsible-toggle>
+    </a-component>
 
     <p>Same, with toggle text customized:</p>
 
-    <collapsible-toggle toggletext="Toggle content">
+    <a-component does="collapsible" toggletext="Toggle content">
       <h2>This is a heading</h2>
 	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
-    </collapsible-toggle>
+    </a-component>
 
 
-    <p>Is alternative:</p>
-
-    <div is="collapsible-toggle">
-      <h2>This is a heading</h2>
-	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
-    </collapsible-toggle>
 </body>
 </html>
