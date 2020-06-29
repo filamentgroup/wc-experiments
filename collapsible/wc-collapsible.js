@@ -85,6 +85,9 @@ export class Collapsible {
 			this.collapse();
 		}
 	}
+	destructor(){
+		// if needed..
+	}
 
 	bindEvents(){
 		var self = this;
