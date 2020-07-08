@@ -49,7 +49,7 @@ export class Collapsible {
 	addStyle(){
 		var style = document.createElement("style");
 		style.innerText = `
-			*[does=collapsible][collapsed] > *:nth-child(2) { display: none; }
+			.collapsible-collapsed > *:nth-child(2) { display: none; }
 		`;
 		this.elem.append(style);
 	}

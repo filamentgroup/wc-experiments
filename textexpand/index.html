@@ -9,11 +9,13 @@
   <script src="//unpkg.com/@ungap/custom-elements-builtin"></script>
   <script type="module">
     import './wc-textexpand.js';
+
+    import './wc-component.js';
   </script>
 
 </head>
 <body>
   <h1>Test Text Expand Web Component</h1>
-    <textarea is="text-expand" cols="30" rows="10"></textarea>
+    <textarea is="fg-component" components="textexpand" cols="30" rows="10"></textarea>
 </body>
 </html>

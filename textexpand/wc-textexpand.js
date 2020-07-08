@@ -1,18 +1,11 @@
 // Create a class for the element
+export function textexpand ( elem ) {
+	elem.addEventListener('input', event => elem.setHeight() );
 
-class TextExpand extends HTMLTextAreaElement {
-	connectedCallback() {
-	  this.addEventListener('input', event => this.setHeight() );
+	function setHeight(){
+		elem.style.height = elem.scrollHeight + "px";
 	}
-
-	setHeight(){
-		this.style.height = this.scrollHeight + "px";
-	}
-  
 }
-  // Define the new element
-  customElements.define('text-expand', TextExpand, { extends: 'textarea' });
 
-  export default TextExpand;
 
   
