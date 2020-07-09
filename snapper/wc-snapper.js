@@ -27,7 +27,9 @@ export class Snapper {
 
 		if( this.elem.hasAttribute( "data-snapper-nextprev") ){
 			this.addNextPrev();
-			this.manageArrowState();
+			setTimeout(function(){
+				self.manageArrowState();
+			});
 		}
 		
 		this.elem.setAttribute("tabindex",0);
@@ -176,16 +178,20 @@ export class Snapper {
 		});
 		
 		// cleanup on resize 
-		window.addEventListener("resize", function( e ){
-		 self.manageArrowState();
-		});
+		if( this.elem.hasAttribute( "data-snapper-nextprev") ){
+			window.addEventListener("resize", function( e ){
+			self.manageArrowState();
+			});
+		}
 
 		var scrolling;
 		this.slider.addEventListener("scroll", function( e ){
 			clearTimeout(scrolling);
 			scrolling = setTimeout(function(){
 				self.updateSort();
-				self.manageArrowState();
+				if( self.elem.hasAttribute( "data-snapper-nextprev") ){
+					self.manageArrowState();
+				}
 			},66);
 		});
 
@@ -223,46 +229,42 @@ export class Snapper {
 	}
 
 	manageArrowState(){
-		// // old api helper here. 
-		// if( $el.closest( "[data-snapper-loop], [data-loop]" ).length ){
-		// 	return;
-		// }
-		// var pane = $el.find(".snapper_pane");
-		// var nextLink = $el.find(".snapper_nextprev_next");
-		// var prevLink = $el.find(".snapper_nextprev_prev");
-		// var currScroll = pane[0].scrollLeft;
-		// var scrollWidth = pane[0].scrollWidth;
-		// var width = pane.width();
+		// old api helper here. 
+		if( this.elem.closest( "[data-snapper-loop], [data-loop]" ) ){
+			return;
+		}
+		var pane = this.slider;
+		var nextLink = this.elem.querySelector("." + this.pluginName + "_nextprev_next");
+		var prevLink = this.elem.querySelector("." + this.pluginName + "_nextprev_prev");
+		var currScroll = pane.scrollLeft;
+		var scrollWidth = pane.scrollWidth;
+		var width = pane.offsetWidth;
 
-		// var noScrollAvailable = (width === scrollWidth);
+		var noScrollAvailable = (width === scrollWidth);
 
-		// var maxScroll = scrollWidth - width;
-		// if (currScroll >= maxScroll - 3 || noScrollAvailable ) { // 3 here is arbitrary tolerance
-		// 	nextLink
-		// 		.addClass("snapper_nextprev-disabled")
-		// 		.attr("tabindex", -1);
-		// } else {
-		// 	nextLink
-		// 		.removeClass("snapper_nextprev-disabled")
-		// 		.attr("tabindex", 0);
-		// }
+		var maxScroll = scrollWidth - width;
+		if (currScroll >= maxScroll - 3 || noScrollAvailable ) { // 3 here is arbitrary tolerance
+			nextLink.classList.add("snapper_nextprev-disabled");
+			nextLink.setAttribute("disabled", true);
+		} else {
+			nextLink.classList.remove("snapper_nextprev-disabled");
+			nextLink.removeAttribute("disabled");
+		}
 
-		// if (currScroll > 3 && !noScrollAvailable ) { // 3 is arbitrary tolerance
-		// 	prevLink
-		// 		.removeClass("snapper_nextprev-disabled")
-		// 		.attr("tabindex", 0);
-		// } else {
-		// 	prevLink
-		// 		.addClass("snapper_nextprev-disabled")
-		// 		.attr("tabindex", -1);
-		// }
+		if (currScroll > 3 && !noScrollAvailable ) { // 3 is arbitrary tolerance
+			prevLink.classList.remove("snapper_nextprev-disabled");
+			prevLink.removeAttribute("disabled");
+		} else {
+			prevLink.classList.add("snapper_nextprev-disabled");
+			prevLink.setAttribute("disabled", true);
+		}
 
-		// if( noScrollAvailable ){
-		// 	$el.addClass( "snapper-hide-nav" );
-		// }
-		// else {
-		// 	$el.removeClass( "snapper-hide-nav" );
-		// }
+		if( noScrollAvailable ){
+			this.elem.classList.add( "snapper-hide-nav" );
+		}
+		else {
+			this.elem.classList.remove( "snapper-hide-nav" );
+		}
 	}
 
 	handleClick( e ){
