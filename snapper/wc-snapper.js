@@ -2,6 +2,7 @@ export class Snapper {
 	constructor( elem ){
 		this.pluginName = "snapper";
 		this.elem = elem;
+		var self = this;
 		this.navActiveClass = this.pluginName + "_nav_item-selected";
 		this.activeItemClass = this.pluginName + "_item-active";
 
@@ -36,7 +37,9 @@ export class Snapper {
 
 		this.autoplayAttr = this.elem.getAttribute( "data-snapper-autoplay");
 		if( this.autoplayAttr !== null ){
-			this.startAutoplay();
+			setTimeout(function(){
+				self.nextAutoplay();
+			});
 		}
 	}
 
@@ -278,15 +281,19 @@ export class Snapper {
 	}
 
 
-	startAutoplay(){
+	nextAutoplay(){
 		var currentActive =  this.activeItems()[0];
+		var self = this;
 		if(currentActive){
 			var autoTiming = currentActive.getAttribute( "data-snapper-autoplay" ) || this.autoplayAttr;
 			if( autoTiming !== null ){
 				if( autoTiming ) {
-					this.autoTiming = parseInt(autoTiming, 10) || 5000;
+					var thisTime = parseInt(autoTiming, 10) || 5000;
+					self.autoTiming = setTimeout( function(){
+						self.next();
+						self.nextAutoplay();
+					}, thisTime );
 				}
-				return autoTiming;
 			}
 		}
 	}
