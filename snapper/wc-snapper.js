@@ -130,20 +130,20 @@ export class Snapper {
 		var scrollWidth = this.slider.scrollWidth;
 		var scrollLeft = this.slider.scrollLeft;
 		var contain = this.elem.querySelector( "." + this.pluginName + "_items" );
-		var items = contain.querySelectorAll( "." + this.pluginName + "_item" );
+		var items = this.elem.querySelectorAll( "." + this.pluginName + "_item" );
 		var width = this.elem.offsetWidth;
 
 		if (scrollLeft < width ) {
 		  var sortItem = items[ items.length - 1 ];
 		  var sortItemWidth = sortItem.offsetWidth;
 		  contain.prepend(sortItem);
-		  this.elem.scrollLeft = scrollLeft + sortItemWidth;
+		  this.slider.scrollLeft = scrollLeft + sortItemWidth;
 		}
 		else if (scrollWidth - scrollLeft - width <= 0 ) {
 		  var sortItem = items[0];
 		  var sortItemWidth = sortItem.offsetWidth;
 		  contain.append(sortItem);
-		  this.elem.scrollLeft = scrollLeft - sortItemWidth;
+		  this.slider.scrollLeft = scrollLeft - sortItemWidth;
 		}
 	}
 
@@ -189,7 +189,9 @@ export class Snapper {
 			},66);
 		});
 
-		this.updateSort();
+		setTimeout(function(){
+			self.updateSort();
+		});
 
 
 	}
@@ -215,6 +217,8 @@ export class Snapper {
 				self.manageArrowState();
 			}, 300 );
 		}
+
+		window.addEventListener("resize", resizeUpdates);
 
 	}
 
