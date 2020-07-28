@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test Modal Web Component</title>
+  <script>this.customElements||document.write('<script src="//unpkg.com/document-register-element"><\x2fscript>');</script>
+  <script src="//unpkg.com/@ungap/custom-elements-builtin"></script>
+  <script type="module">
+    import {Modal} from './wc-modal.js';
+    window.modal = Modal;
+  </script>
+  <script type="module">
+    import '../factory/component.js';
+  </script>
+
+  <style>
+   
+    </style>
+</head>
+<body>
+  <h1>Test Modal Web Component</h1>
+
+  <a-component does="modal" id="testmodal">
+      <h2 class="modal_title">This is the modal title</h2>
+	    <p>This is the modal content. </p>
+    </a-component>
+
+
+    <a href="#testmodal" class="modal_link">Test</a>
+
+
+</body>
+</html>
