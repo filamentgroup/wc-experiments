@@ -79,7 +79,7 @@ export class Modal {
 
 	inert(){
 		document.body.querySelectorAll( "*" ).forEach(function(elem){
-			if( !elem.closest(".modal-open") ){
+			if( !elem.closest(".modal-open, .modal-open + .modal_screen") ){
 				elem.inert = true;
 			}
 		});
