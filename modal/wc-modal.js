@@ -24,7 +24,6 @@ export class Modal {
 		this.title = this.elem.querySelector( ".modal_title" );
 		this.enhanceMarkup();
 		this.bindEvents();
-		this.addStyle();
 		this.elem.dispatchEvent( this.initEvent );
 	}
 
@@ -47,28 +46,7 @@ export class Modal {
 		this.elem.after(this.overlay);
 	}
 
-	addStyle(){
-		var style = document.createElement("style");
-		style.innerText = `
-			.modal, .modal_screen { position: fixed; z-index: 1000; }
-			.modal_screen { top: 0; left: 0; width: 100%; height: 100vh; bottom: 0; right: 0; background: rgba(0,0,0,.5); }
-			.modal:not(.modal-open),
-			.modal:not(.modal-open) + .modal_screen { visibility:hidden; }
-			.modal-open { z-index: 1001; background: #fff; box-sizing: border-box; padding: 5vh; top: 25vh; left: 25vw; height: 50vh; width: 50vw; }
-			.modal_close { position: absolute; top: 5vh; right: 5vh; }
-			[inert] {
-				pointer-events: none;
-				cursor: default;
-			  }
-			  [inert], [inert] * {
-				user-select: none;
-				-webkit-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-			  }
-			`;
-		this.elem.append(style);
-	}
+	
 
 	focusFirst(){
 		var focusableEls = this.elem.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
@@ -130,18 +108,21 @@ export class Modal {
 			}
 		});
 
-		// prevent clicks outside dialog
+		// click on the screen itself closes it
+		this.overlay.addEventListener('mouseup', function( e ){
+			if( !self.closed ){
+				self.close();
+			}
+		});
+
+		// click on anything outside dialog closes it too (if screen is not shown maybe?)
 		window.addEventListener('mouseup', function( e ){
 			if( !self.closed && !e.target.closest( "#" + self.id ) ){
 				e.preventDefault();
 				self.close();
 			}
 		});
-		this.overlay.addEventListener('mouseup', function( e ){
-			if( !self.closed ){
-				self.close();
-			}
-		});
+		
 
 		// prevent focus outside dialog
 		window.addEventListener('focusin', function( e){
