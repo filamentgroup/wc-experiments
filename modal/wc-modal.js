@@ -44,7 +44,6 @@ export class Modal {
 		this.elem.classList.add("modal");
 		this.overlay = document.createElement("div");
 		this.overlay.className = "modal_screen";
-		this.overlay.tabIndex = "-1";
 		this.elem.after(this.overlay);
 	}
 
