@@ -42,13 +42,20 @@ export class Modal {
 		this.title.id = this.title.id || ("modal_title_" + new Date().getTime());
 		this.elem.setAttribute( "aria-labeledby", this.title.id );
 		this.elem.classList.add("modal");
+		this.overlay = document.createElement("div");
+		this.overlay.className = "modal_screen";
+		this.overlay.tabIndex = "-1";
+		this.elem.after(this.overlay);
 	}
 
 	addStyle(){
 		var style = document.createElement("style");
 		style.innerText = `
-			.modal:not(.modal-open) { position: fixed; visibility:hidden;  }
-			.modal-open { position: fixed; z-index: 1000; box-sizing: border-box; padding: 5vh; top: 25vh; left: 25vw; height: 50vh; width: 50vw; box-shadow: 0 0 0 25vw rgba(0,0,0,.5); }
+			.modal, .modal_screen { position: fixed; z-index: 1000; }
+			.modal_screen { top: 0; left: 0; width: 100%; height: 100vh; bottom: 0; right: 0; background: rgba(0,0,0,.5); }
+			.modal:not(.modal-open),
+			.modal:not(.modal-open) + .modal_screen { visibility:hidden; }
+			.modal-open { z-index: 1001; background: #fff; box-sizing: border-box; padding: 5vh; top: 25vh; left: 25vw; height: 50vh; width: 50vw; }
 			.modal_close { position: absolute; top: 5vh; right: 5vh; }
 			[inert] {
 				pointer-events: none;
