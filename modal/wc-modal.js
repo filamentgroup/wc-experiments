@@ -82,19 +82,24 @@ export class Modal {
 
 	bindEvents(){
 		var self = this;
+
+		// close btn click
 		this.closeBtn.addEventListener('click', event => self.close());
+
+		// open dialog if click is on link to dialog
 		window.addEventListener('click', function( e ){
 			var assocLink = e.target.closest("a.modal_link[href='#" + self.id + "']");
-			// prevent clicks outside dialog
-			if( !self.closed && !e.target.closest( "#" + self.id ) ){
-				e.preventDefault();
-				self.close();
-			}
-
-			// open dialog if click is on link to dialog
 			if( assocLink ){
 				e.preventDefault();
 				self.open();
+			}
+		});
+
+		// prevent clicks outside dialog
+		window.addEventListener('mouseup', function( e ){
+			if( !self.closed && !e.target.closest( "#" + self.id ) ){
+				e.preventDefault();
+				self.close();
 			}
 		});
 
@@ -106,9 +111,9 @@ export class Modal {
 			}
 		});
 
+		// close on escape
 		window.addEventListener('keydown', function( e){
-			// prevent focus outside dialog
-			if( e.keyCode === 27 ){
+			if( e.keyCode === 27 &&  !self.closed ){
 				e.preventDefault();
 				self.close();
 			}
