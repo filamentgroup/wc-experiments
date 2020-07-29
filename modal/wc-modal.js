@@ -137,6 +137,12 @@ export class Modal {
 				self.close();
 			}
 		});
+		window.addEventListener('pointerup', function( e ){
+			if( !self.closed && !e.target.closest( "#" + self.id ) ){
+				e.preventDefault();
+				self.close();
+			}
+		});
 
 		// prevent focus outside dialog
 		window.addEventListener('focusin', function( e){
