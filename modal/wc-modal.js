@@ -40,7 +40,7 @@ export class Modal {
 		this.elem.setAttribute( "role", "dialog" );
 		this.id = this.elem.id || ("modal_" + new Date().getTime());
 		this.title.id = this.title.id || ("modal_title_" + new Date().getTime());
-		this.elem.setAttribute( "aria-labeled-by", this.title.id );
+		this.elem.setAttribute( "aria-labeledby", this.title.id );
 		this.elem.classList.add("modal");
 	}
 
