@@ -137,9 +137,8 @@ export class Modal {
 				self.close();
 			}
 		});
-		window.addEventListener('pointerup', function( e ){
-			if( !self.closed && !e.target.closest( "#" + self.id ) ){
-				e.preventDefault();
+		this.overlay.addEventListener('mouseup', function( e ){
+			if( !self.closed ){
 				self.close();
 			}
 		});
