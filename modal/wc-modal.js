@@ -48,7 +48,7 @@ export class Modal {
 		var style = document.createElement("style");
 		style.innerText = `
 			.modal:not(.modal-open) { position: fixed; visibility:hidden;  }
-			.modal-open { position: fixed; z-index: 1000; box-sizing: border-box; padding: 5vh;  top: 25vh; left: 25vw; height: 50vh; width: 50vw; outline: 25vw solid rgba(0,0,0,.3); }
+			.modal-open { position: fixed; z-index: 1000; box-sizing: border-box; padding: 5vh; top: 25vh; left: 25vw; height: 50vh; width: 50vw; box-shadow: 0 0 25vw rgba(0,0,0,.3); }
 			.modal_close { position: absolute; top: 5vh; right: 5vh; }
 			`;
 		this.elem.append(style);
