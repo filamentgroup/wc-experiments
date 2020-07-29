@@ -111,7 +111,8 @@ export class Modal {
 	}
 
 	destructor(){
-		// if needed..
+		// remove screen when elem is removed
+		this.overlay.remove();
 	}
 
 
