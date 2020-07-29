@@ -50,6 +50,16 @@ export class Modal {
 			.modal:not(.modal-open) { position: fixed; visibility:hidden;  }
 			.modal-open { position: fixed; z-index: 1000; box-sizing: border-box; padding: 5vh; top: 25vh; left: 25vw; height: 50vh; width: 50vw; box-shadow: 0 0 0 25vw rgba(0,0,0,.5); }
 			.modal_close { position: absolute; top: 5vh; right: 5vh; }
+			[inert] {
+				pointer-events: none;
+				cursor: default;
+			  }
+			  [inert], [inert] * {
+				user-select: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+			  }
 			`;
 		this.elem.append(style);
 	}
@@ -60,15 +70,33 @@ export class Modal {
 		focusableEls[0].focus();
 	}
 
+	inert(){
+		document.body.querySelectorAll( "*" ).forEach(function(elem){
+			if( !elem.closest(".modal-open") ){
+				elem.inert = true;
+			}
+		});
+	}
+
+	unert(){
+		document.querySelectorAll( "[inert]" ).forEach(function(elem){
+			elem.inert = false;
+		});
+	}
+
 	open(){
+		var self = this;
 		this.elem.classList.add( "modal-open" );
 		this.focusedElem = document.activeElement;
 		this.closed = false;
 		this.focusFirst();
 		this.elem.dispatchEvent( this.openEvent );
+		setTimeout(self.inert);
 	}
 
 	close(){
+		var self = this;
+		setTimeout(self.unert);
 		this.elem.classList.remove( "modal-open" );
 		this.closed = true;
 		this.elem.dispatchEvent( this.closeEvent );
