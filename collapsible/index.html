@@ -9,6 +9,8 @@
   <script type="module">
     import {Collapsible} from './wc-collapsible.js';
     window.collapsible = Collapsible;
+    import {Collapsibleset} from './wc-collapsibleset.js';
+    window.collapsibleset = Collapsibleset;
   </script>
   <script type="module">
     import '../factory/component.js';
@@ -75,6 +77,33 @@
     <a-component does="collapsible" toggletext="Toggle content">
       <h2>This is a heading</h2>
 	    <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+    </a-component>
+
+
+    <p>Collapsible accordion set</p>
+
+    <a-component does="collapsibleset">
+
+      <a-component does="collapsible" collapsed>
+        <button>Show/Hide Content</button>
+        <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+      </a-component>
+
+      <a-component does="collapsible" collapsed>
+        <button>Show/Hide Content</button>
+        <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+      </a-component>
+
+      <a-component does="collapsible" collapsed>
+        <button>Show/Hide Content</button>
+        <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+      </a-component>
+
+      <a-component does="collapsible" collapsed>
+        <button>Show/Hide Content</button>
+        <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+      </a-component>
+
     </a-component>
 
 
