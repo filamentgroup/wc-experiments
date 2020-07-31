@@ -31,7 +31,7 @@ export class Modal {
 		var btn = document.createElement( "button" );
 		btn.className = this.closeclass;
 		btn.innerHTML = this.closetext;
-		this.elem.append( btn );
+		this.elem.prepend( btn );
 		return btn;
 	}
 
