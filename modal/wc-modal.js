@@ -49,6 +49,7 @@ export class Modal {
 	
 
 	focusFirst(){
+		// thx https://bitsofco.de/accessible-modal-dialog/
 		var focusableEls = this.elem.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
 		var focusableEls = Array.prototype.slice.call(focusableEls);
 		focusableEls[0].focus();
