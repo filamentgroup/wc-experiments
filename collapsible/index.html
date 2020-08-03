@@ -11,6 +11,9 @@
     window.collapsible = Collapsible;
     import {Collapsibleset} from './wc-collapsibleset.js';
     window.collapsibleset = Collapsibleset;
+
+    import {Detailsset} from './wc-detailsset.js';
+    window.detailsset = Detailsset;
   </script>
   <script type="module">
     import '../factory/component.js';
@@ -18,24 +21,28 @@
 
   <style>
     /* some simple demo styles for all collapsibles on this page */
+    body {
+      font-family: sans-serif;
+    }
     a-component[does="collapsible"] > button {
       display: none;
     }
-    a-component[does="collapsible"].defined > button  {
+    a-component[does="collapsible"].defined > button,
+    details > summary  {
       display: block;
+      padding: .5em 0 .5em 35px;
       padding-left: 35px;
       margin-bottom: 0;
       cursor: pointer;
+      outline: none;
       background: url(tri-down.png) 10px 50% no-repeat;
-    }
-    a-component[does="collapsible"] > button {
-        padding: .5em 0;
         border: 0;
         font-size: 1em;
         margin-top: 0;
         background-color: #fff;
     }
-    a-component[does="collapsible"] > *:nth-child(2) {
+    a-component[does="collapsible"] > *:nth-child(2),
+    details > summary + * {
         margin-top: 0;
         border-top-width: 0;
         padding-top: 1.5em;
@@ -43,7 +50,8 @@
         padding-left: 10px;
     }
    
-    a-component[does="collapsible"] > button[aria-expanded=false] {
+    a-component[does="collapsible"] > button[aria-expanded=false],
+    details:not([open]) > summary {
         background-image: url(tri-right.png);
     }
     a-component[does="collapsible"] > button:focus {
@@ -103,6 +111,36 @@
         <button>Show/Hide Content</button>
         <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
       </a-component>
+
+    </a-component>
+
+
+
+
+    <p>HTML-only Collapsible</p>
+
+    <details>
+      <summary>Show/Hide Content</summary>
+      <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+    </details>
+
+    <p>HTML-only Collapsibles accordion set</p>
+
+    <a-component does="detailsset">
+
+      
+      <details>
+        <summary>Show/Hide Content</summary>
+        <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+      </details>
+      <details>
+        <summary>Show/Hide Content</summary>
+        <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+      </details>
+      <details>
+        <summary>Show/Hide Content</summary>
+        <p>This is the collapsible content. Currently, it's a <code>p</code> element, but it could be anything really, like a <code>div</code> containing other <code>p</code>'s for example.</p>
+      </details>
 
     </a-component>
 
