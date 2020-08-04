@@ -32,9 +32,33 @@
 
 .modal_close {
 	position: absolute;
-	top: 5vh;
-	right: 5vh;
+	top: 1vh;
+	right: 1vh;
+	border: none;
+	cursor: pointer;
+	background: transparent;
+	margin: 0;
+	font-size: 1.4rem;
+	width: 1em;
+	height: 1em;
+	line-height: 1;
+	overflow: hidden;
+	text-indent: -999px;
 }
+.modal_close:before,
+.modal_close:after {
+	content: "";
+	height: 1em;
+	width: .2em;
+	left: .4em;
+	background: #777;
+	position: absolute;
+	transform: rotate(-45deg);
+}
+.modal_close:after {
+	transform: rotate(45deg);
+}
+
 
 /* inert polyfill styles */
 [inert] {

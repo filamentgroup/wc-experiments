@@ -11,6 +11,11 @@ export class Modal {
 			cancelable: false
 		});
 
+		this.beforeOpenEvent = new CustomEvent("beforeopen", {
+			bubbles: true,
+			cancelable: false
+		});
+
 		this.openEvent = new CustomEvent("open", {
 			bubbles: true,
 			cancelable: false
@@ -20,7 +25,12 @@ export class Modal {
 			bubbles: true,
 			cancelable: false
 		});
-		this.closeBtn = this.appendCloseBtn();
+
+		this.beforeCloseEvent = new CustomEvent("beforeclose", {
+			bubbles: true,
+			cancelable: false
+		});
+		this.closeBtn = this.elem.querySelector( "." + this.closeclass ) || this.appendCloseBtn();
 		this.title = this.elem.querySelector( ".modal_title" );
 		this.enhanceMarkup();
 		this.bindEvents();
@@ -69,23 +79,44 @@ export class Modal {
 		});
 	}
 
-	open(){
+	open( programmedOpen ){
 		var self = this;
+		this.elem.dispatchEvent( this.beforeOpenEvent );
 		this.elem.classList.add( "modal-open" );
-		this.focusedElem = document.activeElement;
+		if( !programmedOpen ){
+			this.focusedElem = document.activeElement;
+		}
 		this.closed = false;
 		this.focusFirst();
+		self.inert();
 		this.elem.dispatchEvent( this.openEvent );
-		setTimeout(self.inert);
 	}
 
-	close(){
+	getInstance( elem ){
+        var ret;
+        elem.bound.forEach(function( func ){
+            if( func[1] === "modal" ){
+                ret = func[0];
+            }
+        });
+        return ret;
+    }
+
+	close( programmedClose ){
 		var self = this;
-		setTimeout(self.unert);
+		this.elem.dispatchEvent( this.beforeCloseEvent );
 		this.elem.classList.remove( "modal-open" );
 		this.closed = true;
+		self.unert();
+		var focusedElemModal = this.focusedElem.closest(".modal");
+		if( focusedElemModal ){
+			self.getInstance( focusedElemModal ).open( true );
+		}
+		if( !programmedClose ){
+			this.focusedElem.focus();
+		}
+		
 		this.elem.dispatchEvent( this.closeEvent );
-		this.focusedElem.focus();
 	}
 
 	destructor(){
@@ -125,14 +156,6 @@ export class Modal {
 		});
 		
 
-		// prevent focus outside dialog
-		window.addEventListener('focusin', function( e){
-			if( !self.closed && !e.target.closest( "#" + self.id ) ){
-				e.preventDefault();
-				self.focusFirst();
-			}
-		});
-
 		// close on escape
 		window.addEventListener('keydown', function( e){
 			if( e.keyCode === 27 &&  !self.closed ){
@@ -140,6 +163,13 @@ export class Modal {
 				self.close();
 			}
 			
+		});
+
+		// close on other dialog open
+		window.addEventListener('beforeopen', function( e){
+			if( !self.closed && e.target !== this.elem ){
+				self.close( true );
+			}
 		});
 	}
 }
