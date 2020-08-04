@@ -31,7 +31,7 @@ export class Modal {
 			cancelable: false
 		});
 		this.closeBtn = this.elem.querySelector( "." + this.closeclass ) || this.appendCloseBtn();
-		this.title = this.elem.querySelector( ".modal_title" );
+		this.title = this.elem.querySelector( ".modal_title" ) || this.ariaLabel;
 		this.enhanceMarkup();
 		this.bindEvents();
 		this.elem.dispatchEvent( this.initEvent );
@@ -54,6 +54,8 @@ export class Modal {
 		this.overlay = document.createElement("div");
 		this.overlay.className = "modal_screen";
 		this.elem.after(this.overlay);
+		this.modalLinks = "a.modal_link[href='#" + this.id + "']";
+		this.changeAssocLinkRoles();
 	}
 
 	
@@ -124,6 +126,12 @@ export class Modal {
 		this.overlay.remove();
 	}
 
+	changeAssocLinkRoles(){
+		document.querySelectorAll(this.modalLinks).forEach(function(elem){
+			elem.setAttribute("role", "button" );
+		});
+	}
+
 
 	bindEvents(){
 		var self = this;
@@ -133,7 +141,7 @@ export class Modal {
 
 		// open dialog if click is on link to dialog
 		window.addEventListener('click', function( e ){
-			var assocLink = e.target.closest("a.modal_link[href='#" + self.id + "']");
+			var assocLink = e.target.closest(self.modalLinks);
 			if( assocLink ){
 				e.preventDefault();
 				self.open();
