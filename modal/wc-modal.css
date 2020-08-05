@@ -40,8 +40,8 @@
 	background: transparent;
 	margin: 0;
 	font-size: 1.4rem;
-	width: 1em;
-	height: 1em;
+	width: 1.4em;
+	height: 1.4em;
 	line-height: 1;
 	overflow: hidden;
 	text-indent: -999px;
@@ -50,8 +50,8 @@
 .modal_close:after {
 	content: "";
 	height: 1em;
-	width: .2em;
-	left: .4em;
+	width: .1em;
+	left: 50%;
 	background: #777;
 	position: absolute;
 	transform: rotate(-45deg);
