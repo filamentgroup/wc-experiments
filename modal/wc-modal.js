@@ -31,7 +31,7 @@ export class Modal {
 			cancelable: false
 		});
 		this.closeBtn = this.elem.querySelector( "." + this.closeclass ) || this.appendCloseBtn();
-		this.title = this.elem.querySelector( ".modal_title" ) || this.ariaLabel;
+		this.title = this.elem.querySelector( ".modal_title" );
 		this.enhanceMarkup();
 		this.bindEvents();
 		this.elem.dispatchEvent( this.initEvent );
@@ -48,8 +48,10 @@ export class Modal {
 	enhanceMarkup(){
 		this.elem.setAttribute( "role", "dialog" );
 		this.id = this.elem.id || ("modal_" + new Date().getTime());
-		this.title.id = this.title.id || ("modal_title_" + new Date().getTime());
-		this.elem.setAttribute( "aria-labeledby", this.title.id );
+		if( this.title ){
+			this.title.id = this.title.id || ("modal_title_" + new Date().getTime());
+			this.elem.setAttribute( "aria-labelledby", this.title.id );
+		}
 		this.elem.classList.add("modal");
 		this.overlay = document.createElement("div");
 		this.overlay.className = "modal_screen";

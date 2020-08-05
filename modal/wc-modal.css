@@ -51,7 +51,8 @@
 	content: "";
 	height: 1em;
 	width: .1em;
-	left: 50%;
+	top: .2em;
+	left: .65em;
 	background: #777;
 	position: absolute;
 	transform: rotate(-45deg);
