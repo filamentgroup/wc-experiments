@@ -70,11 +70,21 @@ export class Modal {
 	}
 
 	inert(){
-		document.body.querySelectorAll( "*" ).forEach(function(elem){
-			if( !elem.closest(".modal-open, .modal-open + .modal_screen") ){
-				elem.inert = true;
+		var self = this;
+		function inertSiblings( node ){
+			if( node.parentNode ){
+				node.parentNode.childNodes.forEach(function(elem){
+					if( elem !== node && elem.nodeType === 1 ){
+						elem.inert = true;
+					}
+				});
+				if( node.parentNode !== document.body ){
+					inertSiblings(node.parentNode);
+				}
 			}
-		});
+			
+		}
+		inertSiblings(this.elem);
 	}
 
 	unert(){
