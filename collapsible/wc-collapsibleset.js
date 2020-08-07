@@ -15,21 +15,11 @@ export class Collapsibleset {
         });
 		this.elem.dispatchEvent( this.initEvent );
     }
-    
-    getCollapsibleInstance( elem ){
-        var ret;
-        elem.bound.forEach(function( func ){
-            if( func[1] === "collapsible" ){
-                ret = func[0];
-            }
-        });
-        return ret;
-    }
 
 	setState(){
         var self = this;
         self.elem.querySelectorAll( "a-component[does*=collapsible]" ).forEach(function( elem ){
-            self.getCollapsibleInstance( elem ).collapse();
+            elem.collapsible.collapse();
         });
     }
 
@@ -38,7 +28,7 @@ export class Collapsibleset {
 		window.addEventListener('expand', function(e){
             self.elem.querySelectorAll("a-component[does*=collapsible]").forEach(function( elem ){
                 if( elem !== e.target ){
-                    self.getCollapsibleInstance( elem ).collapse();
+                    elem.collapsible.collapse();
                 }
             });
         });
