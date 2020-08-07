@@ -41,7 +41,7 @@ export class Modal {
 		var btn = document.createElement( "button" );
 		btn.className = this.closeclass;
 		btn.innerHTML = this.closetext;
-		this.elem.prepend( btn );
+		this.elem.append( btn );
 		return btn;
 	}
 
@@ -53,20 +53,12 @@ export class Modal {
 			this.elem.setAttribute( "aria-labelledby", this.title.id );
 		}
 		this.elem.classList.add("modal");
+		this.elem.setAttribute("tabindex","-1");
 		this.overlay = document.createElement("div");
 		this.overlay.className = "modal_screen";
 		this.elem.after(this.overlay);
 		this.modalLinks = "a.modal_link[href='#" + this.id + "']";
 		this.changeAssocLinkRoles();
-	}
-
-	
-
-	focusFirst(){
-		// thx https://bitsofco.de/accessible-modal-dialog/
-		var focusableEls = this.elem.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
-		var focusableEls = Array.prototype.slice.call(focusableEls);
-		focusableEls[0].focus();
 	}
 
 	inert(){
@@ -101,7 +93,7 @@ export class Modal {
 			this.focusedElem = document.activeElement;
 		}
 		this.closed = false;
-		this.focusFirst();
+		this.elem.focus();
 		self.inert();
 		this.elem.dispatchEvent( this.openEvent );
 	}
