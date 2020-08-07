@@ -4,20 +4,20 @@
 export class Component extends HTMLElement {
 	connectedCallback(){
 		var elem = this;
-		this.bound = [];
 		this.getAttribute( "does" ).split( " " ).forEach(function( func ){
 			if( window[func] ){
-				elem.bound.push( [new window[func](elem), func] );
+				elem[ func ] = new window[func](elem);
 				elem.classList.add("defined");
 				elem.dispatchEvent( new Event("create." + func, {"bubbles":true, "cancelable":false}) );
 			}
 		});
 	}
 	disconnectedCallback(){
-		this.bound.forEach(function( func ){
-			document.dispatchEvent( new Event("destroy." + func[1], {"bubbles":true, "cancelable":false}) );
-			if( func[0].destructor ){
-				func[0].destructor();
+		var elem = this;
+		this.getAttribute( "does" ).split( " " ).forEach(function( func ){
+			document.dispatchEvent( new Event("destroy." + func, {"bubbles":true, "cancelable":false}) );
+			if( elem[func].destructor ){
+				elem[func].destructor();
 			}
 		});
 	}
